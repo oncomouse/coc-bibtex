@@ -17,15 +17,15 @@ Set `list.source.bibtex.files` to an array containing your `.bib` files. For ins
 ~~~json
 {
 // …
-	"list": {
-		"source": {
-			"bibtex": {
-				"files": [
-					"~/my-library.bib"
-				]
-			}
-		}
-	}
+  "list": {
+    "source": {
+      "bibtex": {
+        "files": [
+          "~/my-library.bib"
+        ]
+      }
+    }
+  }
 // …
 }
 ~~~
