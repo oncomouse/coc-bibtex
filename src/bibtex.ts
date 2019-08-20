@@ -8,7 +8,7 @@ import { installFzfBibTeX, goBinPath } from './commands'
 class Task extends EventEmitter implements ListTask {
   private processes: ChildProcess[] = []
 
-  public start(cmd: string, files: string[], outputCmd: string): void {
+  public start(cmd: string, files: string[]): void {
     let remain = files.length
     for (let file of files) {
       const process = spawn(cmd, [file])
@@ -23,18 +23,13 @@ class Task extends EventEmitter implements ListTask {
 
       rl.on('line', (line: string) => {
         const id = `@${line.replace(/\x1b\[[0-9;]*m/g,'').split('@').slice(-1)[0]}`.trim()
-        const outputProcess = spawn(outputCmd, [file])
-        outputProcess.stdout.on('data', (cite) => {
-          this.emit('data', {
-            label: line,
-            filterText: id,
-            data: {
-              cite: cite.toString().trim(),
-            }
-          })
+        this.emit('data', {
+          label: line,
+          filterText: id,
+          data: {
+            id
+          }
         })
-        outputProcess.stdin.write(id)
-        outputProcess.stdin.end()
       })
       rl.on('close', () => {
         remain = remain - 1
@@ -61,13 +56,19 @@ export default class FilesList extends BasicList {
   public readonly detail = ``
   public options = []
   private files: string[]
+  private outCmd: string
 
   constructor(nvim: Neovim) {
     super(nvim)
     this.addAction('insert', async (item) => {
-      const {nvim} = workspace
-      await nvim.command(`normal! i [${item.data.cite}]`)
-      await nvim.call('feedkeys', ['a', 'n'])
+      const outputProcess = spawn(this.outCmd, [this.files.join(':')])
+      outputProcess.stdout.on('data', async (cite) => {
+        const {nvim} = workspace
+        await nvim.command(`normal! i [${cite}]`)
+        await nvim.call('feedkeys', ['a', 'n'])
+      })
+      outputProcess.stdin.write(item.data.id)
+      outputProcess.stdin.end()
     })
     this.files = []
     this.cacheFullFilePaths()
@@ -85,7 +86,7 @@ export default class FilesList extends BasicList {
       this.files.push(fullPath)
     }
   }
-  public async getCommand(): Promise<{ cmd: string, outCmd: string }> {
+  public async getCommand(): Promise<{ cmd: string }> {
     const config = workspace.getConfiguration('list.source.bibtex')
     let cmd = await goBinPath('bibtex-ls')
     if (!executable(cmd)) {
@@ -95,8 +96,8 @@ export default class FilesList extends BasicList {
         return null
       }
     }
-    const outCmd = await goBinPath(config.get<string>('outputCommand', 'bibtex-cite'))
-    return { cmd, outCmd }
+    this.outCmd = await goBinPath(config.get<string>('outputCommand', 'bibtex-cite'))
+    return { cmd }
   }
 
   public async loadItems(): Promise<ListTask> {
@@ -104,7 +105,7 @@ export default class FilesList extends BasicList {
     if (!res) return null
     if (this.files.length === 0) return null
     const task = new Task()
-    task.start(res.cmd, this.files, res.outCmd)
+    task.start(res.cmd, this.files)
     return task
   }
 }
