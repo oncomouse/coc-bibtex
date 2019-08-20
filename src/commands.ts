@@ -5,12 +5,23 @@ import which from 'which'
 import {executable} from './util'
 
 // From https://github.com/josa42/coc-go/blob/master/src/utils/config.ts:
-async function configDir(...names: string[]): Promise<string> {
+interface State {
+  storagePath?: string
+}
 
-  const storage = (() => {
+const state: State = {}
+export function setStoragePath(dir: string): void {
+  state.storagePath = dir
+}
+async function configDir(...names: string[]): Promise<string> {
+  const storage = state.storagePath || (() => {
     const home = require('os').homedir()
-    return path.join(home, '.config', 'coc', 'bibtex')
+    return path.join(home, '.config', 'coc', 'extensions', 'bibtex')
   })()
+
+  if(!state.storagePath) {
+    setStoragePath(storage)
+  }
 
   const dir = path.join(storage, ...names)
 
