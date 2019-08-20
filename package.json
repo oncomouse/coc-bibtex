@@ -10,7 +10,8 @@
   "author": "Andrew Pilsch <oncomouse@gmail.com> (https://andrew.pilsch.com)",
   "license": "MIT",
   "scripts": {
-    "build": "webpack"
+    "build": "webpack",
+    "prepare": "webpack"
   },
   "engines": {
     "coc": "^0.0.72"
