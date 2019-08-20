@@ -16,11 +16,20 @@
     "build": "webpack",
     "prepare": "webpack"
   },
+  "keywords": [
+    "coc.nvim",
+    "neovim",
+    "vim",
+    "bibtex"
+  ],
   "engines": {
     "coc": "^0.0.72"
   },
   "activationEvents": [
-    "*"
+    "onLanguage: pandoc",
+    "onLanguage: markdown",
+    "onLanguage: latex",
+    "onCommand: bibtex.install"
   ],
   "contributes": {
     "configuration": {
