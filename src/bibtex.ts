@@ -13,8 +13,6 @@ class Task extends EventEmitter implements ListTask {
     for (let file of files) {
       const process = spawn(cmd, [file])
       this.processes.push(process)
-      const outputProcess = spawn(outputCmd, [file])
-      this.processes.push(outputProcess)
       process.on('error', e => {
         this.emit('error', e.message)
       })
@@ -25,7 +23,8 @@ class Task extends EventEmitter implements ListTask {
 
       rl.on('line', (line: string) => {
         const id = `@${line.replace(/\x1b\[[0-9;]*m/g,'').split('@').slice(-1)[0]}`.trim()
-        outputProcess.stdout.once('data', (cite) => {
+        const outputProcess = spawn(outputCmd, [file])
+        outputProcess.stdout.on('data', (cite) => {
           this.emit('data', {
             label: line,
             filterText: id,
@@ -35,10 +34,10 @@ class Task extends EventEmitter implements ListTask {
           })
         })
         outputProcess.stdin.write(id)
+        outputProcess.stdin.end()
       })
       rl.on('close', () => {
         remain = remain - 1
-        outputProcess.stdin.end()
         if (remain == 0) {
           this.emit('end')
         }
