@@ -1,7 +1,10 @@
 {
   "name": "coc-bibtex",
   "version": "1.0.2",
-  "main": "src/index.js",
+  "main": "./lib/index.js",
+  "files": [
+    "lib/"
+  ],
   "homepage": "https://github.com/oncomouse/coc-bibtex#readme",
   "bugs": {
     "url": "https://github.com/oncomouse/coc-bibtex/issues",
