@@ -1,0 +1,59 @@
+{
+  "name": "coc-bibtex",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "webpack"
+  },
+  "engines": {
+    "coc": "^0.0.72"
+  },
+  "activationEvents": [
+    "onLanguage: pandoc",
+    "onLanguage: markdown",
+    "onLanguage: latex",
+    "onCommand: bibtex.install"
+  ],
+  "contributes": {
+    "configuration": {
+      "type": "object",
+      "properties": {
+        "list.source.bibtex.files": {
+          "type": "array",
+          "default": [],
+          "description": "List of .bib files to read.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "list.source.bibtex.outputCommand": {
+          "type": "string",
+          "default": "bibtex-cite",
+          "description": "Set to bibtex-cite to insert a citeproc or LaTex \ref command. Set to bibtex-markdown to insert a work cited entry."
+        }
+      }
+    }
+  },
+  "commands": [
+    {
+      "command": "bibtex.install",
+      "description": "Install fzf-bibtex"
+    }
+  ],
+  "devDependencies": {
+    "@chemzqm/tsconfig": "^0.0.3",
+    "@chemzqm/tslint-config": "^1.0.18",
+    "@types/colors": "^1.2.1",
+    "@types/node": "^12.7.2",
+    "@types/which": "^1.3.1",
+    "coc.nvim": "^0.0.73",
+    "colors": "^1.3.3",
+    "ts-loader": "^6.0.4",
+    "tslint": "^5.18.0",
+    "typescript": "^3.5.3",
+    "webpack": "^4.39.2",
+    "webpack-cli": "^3.3.7",
+    "which": "^1.3.1"
+  }
+}
