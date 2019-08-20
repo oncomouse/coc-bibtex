@@ -42,4 +42,4 @@ call coc#config('list.source.bibtex', {
 
 ## Todo
 
-* [] Add the ability to pass a `.bib` file as an argument to the list call
+* [ ] Add the ability to pass a `.bib` file as an argument to the list call
