@@ -33,7 +33,7 @@ Set `list.source.bibtex.files` to an array containing your `.bib` files. For ins
 Or in vimrc:
 
 ~~~
-call coc#config('list.source.bibtex'. {
+call coc#config('list.source.bibtex', {
   \  'files': [
   \    '~/my-library.bib'
   \  ]
