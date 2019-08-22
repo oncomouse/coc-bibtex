@@ -1,30 +1,36 @@
 import { BasicList, ListTask, ListItem, Neovim, workspace } from 'coc.nvim'
+import { Readable } from 'stream'
 import { EventEmitter } from 'events'
 import fs from 'fs'
-import Cite from './vendor/citation-js'
+import CacheInterface from './CacheInterface'
+import BibTeXReader from './BibTexReader'
+import cacheFullFilePaths from './cacheFullFilePaths'
+
+class CacheReader extends Readable {
+  constructor(file:string) {
+    super({})
+    const cacheData = JSON.parse(fs.readFileSync(file).toString())
+    cacheData.map(data => this.push(JSON.stringify(data)))
+    this.push(null)
+  }
+}
 
 class Task extends EventEmitter implements ListTask {
-  private processes: Promise<ListItem>[] = []
-
+  constructor() {
+    super()
+  }
   public start(files: string[]): void {
     for (let file of files) {
-      const bibData = Cite.parse.bibtex.text(fs.readFileSync(file).toString())
-      bibData.forEach(entry => {
-        this.processes.push(new Promise<ListItem>(resolve => {
-          const cite = (new Cite(entry, {})).format('bibliography', {append: entry => `[${entry.id}]`})
-          const data = {
-            label: cite,
-            filterText: entry.id,
-            data: {
-              cite: `@${entry.id}`
-            }
-          }
-          this.emit('data', data)
-          resolve(data)
-        }))
+      const cacheFile = CacheInterface.cacheFilePath(file)
+      const task = (fs.existsSync(cacheFile)) ? new CacheReader(cacheFile) : new BibTeXReader(file)
+      task.on('data', data => {
+        const json = JSON.parse(data)
+        this.emit('data', json)
+      })
+      task.on('end', () => {
+        this.emit('end')
       })
     }
-    Promise.all(this.processes).then(() => this.emit('end'))
   }
 
   public dispose(): void {
@@ -46,21 +52,10 @@ export default class FilesList extends BasicList {
       await nvim.command(`normal! i [${item.data.cite}]`)
       await nvim.call('feedkeys', ['a', 'n'])
     })
-    this.files = []
-    this.cacheFullFilePaths()
+    this.cacheFilePaths()
   }
-
-  async cacheFullFilePaths() {
-    const {nvim} = workspace
-    const config = workspace.getConfiguration('list.source.bibtex')
-    const files = config.get<string[]>('files', [])
-    if (files.length === 0) {
-      workspace.showMessage('No .bib files provided; set list.source.bibtex to a list of .bib files')
-    }
-    for (let i = 0; i < files.length; i++) {
-      const fullPath = await nvim.call('expand', files[i])
-      this.files.push(fullPath)
-    }
+  private async cacheFilePaths() {
+    this.files = await cacheFullFilePaths()
   }
 
   public async loadItems(): Promise<ListTask> {
