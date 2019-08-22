@@ -6,6 +6,9 @@ interface BibTexEntry {
     entry: {
       title: string,
       label: string,
+      properties: {
+        title: string,
+      }
     },
   }
 }
