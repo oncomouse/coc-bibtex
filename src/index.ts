@@ -1,6 +1,7 @@
-import {ExtensionContext, workspace, listManager} from 'coc.nvim'
+import {ExtensionContext, sources, workspace, listManager} from 'coc.nvim'
 import fs from 'fs'
-import BibTeXList from './bibtex'
+import BibTeXList from './list'
+import BibTexSource from './complete'
 import cacheFullFilePaths from './cacheFullFilePaths'
 import BibTeXReader from './BibTexReader'
 import CacheInterface from './CacheInterface'
@@ -28,5 +29,6 @@ export async function activate(context: ExtensionContext) {
       })
     })
     subscriptions.push(listManager.registerList(new BibTeXList(nvim)))
+    subscriptions.push(sources.createSource(BibTexSource))
   }
 }

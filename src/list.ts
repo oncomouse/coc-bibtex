@@ -1,19 +1,10 @@
-import { BasicList, ListTask, ListItem, Neovim, workspace } from 'coc.nvim'
-import { Readable } from 'stream'
+import { BasicList, ListTask, Neovim, workspace } from 'coc.nvim'
 import { EventEmitter } from 'events'
 import fs from 'fs'
 import CacheInterface from './CacheInterface'
 import BibTeXReader from './BibTexReader'
 import cacheFullFilePaths from './cacheFullFilePaths'
-
-class CacheReader extends Readable {
-  constructor(file:string) {
-    super({})
-    const cacheData = JSON.parse(fs.readFileSync(file).toString())
-    cacheData.map(data => this.push(JSON.stringify(data)))
-    this.push(null)
-  }
-}
+import CacheFileReader from './CacheFileReader'
 
 class Task extends EventEmitter implements ListTask {
   constructor() {
@@ -22,7 +13,7 @@ class Task extends EventEmitter implements ListTask {
   public start(files: string[]): void {
     for (let file of files) {
       const cacheFile = CacheInterface.cacheFilePath(file)
-      const task = (fs.existsSync(cacheFile)) ? new CacheReader(cacheFile) : new BibTeXReader(file)
+      const task = (fs.existsSync(cacheFile)) ? new CacheFileReader(cacheFile) : new BibTeXReader(file)
       task.on('data', data => {
         const json = JSON.parse(data)
         this.emit('data', json)
