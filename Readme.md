@@ -1,10 +1,6 @@
 # coc-bibtex
 
-This [Coc](https://github.com/neoclide/coc.nvim) extension adds a BibTeX source to CocList. You can access it by running `:CocList bibtex` in (Neo)Vim.
-
-## Requirements
-
-This extension uses the same [Go](https://golang.org/) binaries used in [fzf-bibtex](https://github.com/msprev/fzf-bibtex), so you will need a working install of [Go](https://golang.org/doc/install) to use this extension.
+This [Coc](https://github.com/neoclide/coc.nvim) extension adds a BibTeX source to CocList. You can access it by running `:CocList bibtex` in (Neo)Vim. You can also use it as an autocompletion source for BibTeX entries.
 
 ## Installation
 
