@@ -28,8 +28,7 @@
   "activationEvents": [
     "onLanguage:pandoc",
     "onLanguage:markdown",
-    "onLanguage:latex",
-    "onCommand:bibtex.install"
+    "onLanguage:latex"
   ],
   "contributes": {
     "configuration": {
@@ -47,29 +46,45 @@
           "type": "string",
           "default": "bibtex-cite",
           "description": "Set to bibtex-cite to insert a citeproc or LaTex \ref command. Set to bibtex-markdown to insert a work cited entry."
+        },
+        "coc.source.bibtex.enable": {
+          "type": "boolean",
+          "default": true
+        },
+        "coc.source.bibtex.shortcut": {
+          "type": "string",
+          "default": "BIB"
+        },
+        "coc.source.bibtex.filetypes": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "default": [
+            "latex",
+            "pandoc",
+            "markdown"
+          ],
+          "items": {
+            "type": "string"
+          }
         }
       }
     }
   },
-  "commands": [
-    {
-      "command": "bibtex.install",
-      "description": "Install fzf-bibtex"
-    }
-  ],
   "devDependencies": {
     "@chemzqm/tsconfig": "^0.0.3",
     "@chemzqm/tslint-config": "^1.0.18",
-    "@types/colors": "^1.2.1",
+    "@citation-js/core": "^0.4.8",
+    "@citation-js/plugin-bibtex": "^0.4.8",
+    "@citation-js/plugin-csl": "^0.4.8",
     "@types/node": "^12.7.2",
-    "@types/which": "^1.3.1",
     "coc.nvim": "^0.0.73",
-    "colors": "^1.3.3",
+    "crypto": "^1.0.1",
     "ts-loader": "^6.0.4",
     "tslint": "^5.18.0",
     "typescript": "^3.5.3",
     "webpack": "^4.39.2",
-    "webpack-cli": "^3.3.7",
-    "which": "^1.3.1"
+    "webpack-cli": "^3.3.7"
   }
 }

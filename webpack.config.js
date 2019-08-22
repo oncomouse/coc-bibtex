@@ -9,7 +9,7 @@ module.exports = {
     mainFields: ['module', 'main'],
     extensions: ['.js', '.ts'],
     alias: {
-      'sync-request$': path.resolve(__dirname, 'src/shims/sr.js')
+      'sync-request$': path.resolve(__dirname, 'src/shims/sr.ts')
     }
   },
   externals: {
@@ -17,12 +17,6 @@ module.exports = {
   },
   module: {
     rules: [{
-      test: /\.js/,
-      exclude: /node_modules/,
-      use: [{
-        loader: 'babel-loader'
-      }]
-    }, {
       test: /\.ts$/,
       exclude: /node_modules/,
       use: [{
