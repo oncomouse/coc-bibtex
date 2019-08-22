@@ -8,22 +8,27 @@ class BibTeXReader extends Readable {
   constructor(file: string) {
     super({})
     const cacheFile = CacheInterface.cacheFilePath(file)
-    const bibData = Cite.parse.bibtex.text(fs.readFileSync(file).toString())
-    const output = []
-    bibData.forEach((entry:BibTexEntry) => {
-      const cite = (new Cite(entry, {})).format('bibliography', {append: entry => ` [${entry.id}]`})
-      const data = {
-        label: cite,
-        filterText: entry.label,
-        data: {
-          cite: `@${entry.label}`,
-          entry,
+    if(fs.existsSync(cacheFile)) {
+      const cacheData = JSON.parse(fs.readFileSync(cacheFile).toString())
+      cacheData.map(data => this.push(JSON.stringify(data)))
+    } else {
+      const bibData = Cite.parse.bibtex.text(fs.readFileSync(file).toString())
+      const output = []
+      bibData.forEach((entry:BibTexEntry) => {
+        const cite = (new Cite(entry, {})).format('bibliography', {append: entry => ` [${entry.id}]`})
+        const data = {
+          label: cite,
+          filterText: entry.label,
+          data: {
+            cite: `@${entry.label}`,
+            entry,
+          }
         }
-      }
-      this.push(JSON.stringify(data))
-      output.push(data)
-    })
-    fs.writeFileSync(cacheFile, JSON.stringify(output))
+        this.push(JSON.stringify(data))
+        output.push(data)
+      })
+      fs.writeFileSync(cacheFile, JSON.stringify(output))
+    }
     this.push(null)
   }
 }

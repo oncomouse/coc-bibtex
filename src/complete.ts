@@ -1,24 +1,22 @@
-import { CompleteOption, CompleteResult } from 'coc.nvim'
+import { CompleteOption, CompleteResult, VimCompleteItem } from 'coc.nvim'
 import { CancellationToken } from 'vscode-languageserver-protocol'
-import fs from 'fs'
 import cacheFullFilePaths from './cacheFullFilePaths'
 import BibTeXReader from './BibTexReader'
 import BibTexEntry from './BibTexEntry'
-import CacheFileReader from './CacheFileReader'
-import CacheInterface from './CacheInterface'
 
 const source = {
   name: 'bibtex',
   triggerCharacters: ['@'],
   doComplete: async (opt: CompleteOption, token:CancellationToken): Promise<CompleteResult> => {
-    const files = await cacheFullFilePaths()
-    const items = []
+    const files:string[] = await cacheFullFilePaths()
+    const items:VimCompleteItem[] = []
+    const {input} = opt
     return new Promise<CompleteResult>((resolve, reject) => {
       files.forEach(file => {
-        const cacheFile = CacheInterface.cacheFilePath(file)
-        const task = (fs.existsSync(cacheFile)) ? new CacheFileReader(cacheFile) : new BibTeXReader(file)
+        const task = new BibTeXReader(file)
         task.on('data', (json:string) => {
           const entry:BibTexEntry = JSON.parse(json)
+          // Implement matching here
           items.push({
             word: entry.data.cite,
             abbr: entry.data.entry.title,
