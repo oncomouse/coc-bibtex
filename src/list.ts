@@ -41,6 +41,7 @@ export default class FilesList extends BasicList {
     })
     this.cacheFilePaths()
   }
+
   private async cacheFilePaths() {
     this.files = await cacheFullFilePaths()
   }
