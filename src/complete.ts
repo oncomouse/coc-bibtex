@@ -6,7 +6,7 @@ import BibTexEntry from './BibTexEntry'
 
 const source = {
   name: 'bibtex',
-  triggerCharacters: ['@'],
+  triggerOnly: true,
   doComplete: async (opt: CompleteOption, token:CancellationToken): Promise<CompleteResult> => {
     const files:string[] = await cacheFullFilePaths()
     const items:VimCompleteItem[] = []
