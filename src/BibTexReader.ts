@@ -3,6 +3,7 @@ import {Readable} from 'stream'
 import Cite from './vendor/citation-js'
 import CacheInterface from './CacheInterface'
 import BibTexEntry from './BibTexEntry'
+import makeCitation from './makeCitation'
 
 class BibTeXReader extends Readable {
   constructor(file: string) {
@@ -20,7 +21,7 @@ class BibTeXReader extends Readable {
           label: cite,
           filterText: entry.label,
           data: {
-            cite: `@${entry.label}`,
+            cite: makeCitation(entry.label),
             entry,
           }
         }

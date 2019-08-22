@@ -42,10 +42,22 @@
             "type": "string"
           }
         },
-        "list.source.bibtex.outputCommand": {
-          "type": "string",
-          "default": "bibtex-cite",
-          "description": "Set to bibtex-cite to insert a citeproc or LaTex \ref command. Set to bibtex-markdown to insert a work cited entry."
+        "list.source.bibtex.citation": {
+          "type": "object",
+          "default": {
+            "before": "[@",
+            "after": "]"
+          },
+          "properties": {
+            "before": {
+              "type": "string",
+              "description": "What to place before the citation when inserting citations"
+            },
+            "after": {
+              "type": "string",
+              "description": "What to place after the citation when inserting citations"
+            }
+          }
         },
         "coc.source.bibtex.enable": {
           "type": "boolean",

@@ -28,12 +28,45 @@ Set `list.source.bibtex.files` to an array containing your `.bib` files. For ins
 
 Or in vimrc:
 
-~~~
+~~~vim
 call coc#config('list.source.bibtex', {
   \  'files': [
   \    '~/my-library.bib'
   \  ]
   \})
+~~~
+
+### Using with LaTeX
+
+The default configuration for the list source is to insert pandoc-style citations (`[@cite-key]`). If you would like to use this extension with LaTeX, add the following configuration:
+
+In `coc-settings.json`:
+
+~~~json
+{
+//...
+
+"list": {
+  "source": {
+	"bibtex": {
+		"citation": {
+			"before": "\cite{",
+			"after": "\}"
+		}
+	}
+  }
+}
+//...
+}
+~~~
+
+Or in `vimrc`:
+
+~~~vim
+call coc#config('list.source.bibtex.citation', {
+    \ 'before': '\cite{',
+	\ 'after': '}'
+    \ })
 ~~~
 
 ## Todo

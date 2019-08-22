@@ -36,7 +36,7 @@ export default class FilesList extends BasicList {
     super(nvim)
     this.addAction('insert', async (item) => {
       const {nvim} = workspace
-      await nvim.command(`normal! i [${item.data.cite}]`)
+      await nvim.command(`normal! i ${item.data.cite}`)
       await nvim.call('feedkeys', ['a', 'n'])
     })
     this.cacheFilePaths()
