@@ -4,6 +4,8 @@ import cacheFullFilePaths from './cacheFullFilePaths'
 import BibTeXReader from './BibTexReader'
 import BibTexEntry from './BibTexEntry'
 
+const has = (key:any, obj:object):boolean => Object.prototype.hasOwnProperty.call(obj, key)
+
 const source = {
   name: 'bibtex',
   triggerOnly: true,
@@ -21,7 +23,7 @@ const source = {
           const entry:BibTexEntry = JSON.parse(json)
           items.push({
             word: entry.data.entry.label,
-            abbr: `[${entry.data.entry.label}] ${entry.data.entry.properties.title.replace(/[{}]+/g,'')}`,
+            abbr: `[${entry.data.entry.label}] ${(has('title', entry.data.entry.properties) ? entry.data.entry.properties.title : 'Unknown title').replace(/[{}]+/g,'')}`,
             menu: this.menu || '[bibtex]',
           })
         })
