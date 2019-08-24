@@ -1,6 +1,7 @@
 {
   "name": "coc-bibtex",
   "version": "1.2.4",
+  "description": "Coc list & completion source for BibTeX",
   "main": "./lib/index.js",
   "files": [
     "lib/"
