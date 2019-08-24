@@ -1,4 +1,4 @@
-import { CompleteOption, CompleteResult, VimCompleteItem, workspace } from 'coc.nvim'
+import { CompleteOption, CompleteResult, VimCompleteItem } from 'coc.nvim'
 import { CancellationToken } from 'vscode-languageserver-protocol'
 import cacheFullFilePaths from './cacheFullFilePaths'
 import BibTeXReader from './BibTexReader'
