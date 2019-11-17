@@ -1,4 +1,4 @@
-import {ExtensionContext, sources, workspace, listManager} from 'coc.nvim'
+import {ExtensionContext, commands, sources, workspace, listManager} from 'coc.nvim'
 import fs from 'fs'
 import BibTeXList from './list'
 import BibTexSource from './complete'
@@ -15,7 +15,8 @@ export async function activate(context: ExtensionContext) {
   function isDisabled(name:string): boolean {
     return disabled.indexOf(name) !== -1
   }
-  if (!isDisabled('bibtex')) {
+
+  async function updateCache(): Promise<void> {
     const files = await cacheFullFilePaths()
     files.forEach(file => {
       const cacheFile = CacheInterface.cacheFilePath(file)
@@ -28,6 +29,11 @@ export async function activate(context: ExtensionContext) {
         setTimeout(() => nvim.command('echom ""'), 500)
       })
     })
+  }
+
+  if (!isDisabled('bibtex')) {
+    await updateCache()
+    subscriptions.push(commands.registerCommand('bibtex.reloadLibrary', updateCache))
     subscriptions.push(listManager.registerList(new BibTeXList(nvim)))
     subscriptions.push(sources.createSource(BibTexSource))
   }

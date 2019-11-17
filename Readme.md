@@ -69,6 +69,12 @@ call coc#config('list.source.bibtex.citation', {
     \ })
 ~~~
 
+## Useful Commands
+
+`coc-bibtex` provides the following commands (which can be called as `:CocCommand <command name>` in Vim):
+
+* `bibtex.reloadLibrary` – This will reload the library, updating the cache with any new changes.
+
 ## Todo
 
 * [ ] Add the ability to pass a `.bib` file as an argument to the list call
