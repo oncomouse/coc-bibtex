@@ -6,9 +6,9 @@ import BibTexEntry from './BibTexEntry'
 import makeCitation from './makeCitation'
 
 class BibTeXReader extends Readable {
-  constructor(file: string) {
+  constructor(storagePath:string, file: string) {
     super({})
-    const cacheFile = CacheInterface.cacheFilePath(file)
+    const cacheFile = CacheInterface.cacheFilePath(storagePath, file)
     if(fs.existsSync(cacheFile)) {
       const cacheData = JSON.parse(fs.readFileSync(cacheFile).toString())
       cacheData.map(data => this.push(JSON.stringify(data)))
