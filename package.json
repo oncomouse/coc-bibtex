@@ -60,15 +60,15 @@
             }
           }
         },
-        "coc.source.bibtex.enable": {
+        "bibtex.enable": {
           "type": "boolean",
           "default": true
         },
-        "coc.source.bibtex.shortcut": {
+        "bibtex.shortcut": {
           "type": "string",
           "default": "BIB"
         },
-        "coc.source.bibtex.triggerCharacters": {
+        "bibtex.triggerCharacters": {
           "type": "array",
           "default": [
             "@"
@@ -77,7 +77,7 @@
             "type": "string"
           }
         },
-        "coc.source.bibtex.filetypes": {
+        "bibtex.filetypes": {
           "type": [
             "array",
             "null"

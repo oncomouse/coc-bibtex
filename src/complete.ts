@@ -8,7 +8,7 @@ const has = (key:any, obj:object):boolean => Object.prototype.hasOwnProperty.cal
 
 const config = workspace.getConfiguration('bibtex')
 const makeSource = (storagePath:string) => ({
-  name: 'source.bibtex',
+  name: 'bibtex',
   triggerOnly: true,
   triggerCharacters: config.get<string[]>('triggerCharacters', ['@']),
   fileTypes: config.get<string[]>('fileTypes', ['latex', 'pandoc', 'markdown']),
@@ -22,7 +22,6 @@ const makeSource = (storagePath:string) => ({
         resolve(null)
       })
       let remaining = files.length
-      workspace.showMessage(files.join(', '))
       files.forEach(file => {
         const task = new BibTeXReader(storagePath, file)
         task.on('data', (json:string) => {
