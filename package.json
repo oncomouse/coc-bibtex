@@ -64,11 +64,11 @@
           "type": "boolean",
           "default": true
         },
-        "bibtex.shortcut": {
+        "coc.source.bibtex.shortcut": {
           "type": "string",
           "default": "BIB"
         },
-        "bibtex.triggerCharacters": {
+        "coc.source.bibtex.triggerCharacters": {
           "type": "array",
           "default": [
             "@"
@@ -77,7 +77,7 @@
             "type": "string"
           }
         },
-        "bibtex.filetypes": {
+        "coc.source.bibtex.filetypes": {
           "type": [
             "array",
             "null"
