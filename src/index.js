@@ -43,8 +43,8 @@ export async function activate (context) {
 
   if (!isDisabled('bibtex')) {
     await fm.loadFiles();
-    // subscriptions.push(commands.registerCommand('bibtex.reloadLibrary', async () => await reloadFiles()));
+    subscriptions.push(commands.registerCommand('bibtex.reloadLibrary', async () => await reloadFiles()));
     // subscriptions.push(listManager.registerList(new List(fm)));
-    // subscriptions.push(sources.createSource(Complete(fm)));
+    subscriptions.push(sources.createSource(await Complete(fm)));
   }
 }

@@ -150,7 +150,7 @@ class BibtexParser {
         this.pos++;
       } else {
         this.rawCurrentKey = this._input.substring(start, this.pos);
-        return this.rawCurrentKey.toUpperCase();
+        return this.rawCurrentKey;
       }
     }
   }
