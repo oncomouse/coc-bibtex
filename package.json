@@ -94,19 +94,29 @@
       }
     }
   },
+  "eslintConfig": {
+    "extends": "eslint:recommended",
+    "env": {
+      "browser": true,
+      "commonjs": true,
+      "es6": true,
+      "jest": true,
+      "node": true
+    },
+    "parser": "babel-eslint",
+    "rules": {
+      "no-unused-vars": "warn"
+    }
+  },
   "devDependencies": {
-    "@chemzqm/tsconfig": "^0.0.3",
-    "@chemzqm/tslint-config": "^1.0.18",
-    "@citation-js/core": "^0.4.8",
-    "@citation-js/plugin-bibtex": "^0.4.8",
-    "@citation-js/plugin-csl": "^0.4.8",
-    "@types/node": "^12.7.2",
-    "coc.nvim": "^0.0.73",
-    "crypto": "^1.0.1",
-    "ts-loader": "^6.0.4",
-    "tslint": "^5.18.0",
-    "typescript": "^3.5.3",
-    "webpack": "^4.39.2",
-    "webpack-cli": "^3.3.7"
+    "@babel/core": "^7.11.6",
+    "@babel/preset-env": "^7.11.5",
+    "babel-eslint": "^10.1.0",
+    "babel-loader": "^8.1.0",
+    "coc.nvim": "0.0.79",
+    "eslint": "^7.9.0",
+    "glob": "^7.1.6",
+    "webpack": "^4.44.2",
+    "webpack-cli": "^3.3.12"
   }
 }

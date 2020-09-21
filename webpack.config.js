@@ -1,5 +1,5 @@
-const path = require('path')
-const webpack = require('webpack')
+const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
   entry: './src/index',
@@ -7,7 +7,7 @@ module.exports = {
   mode: 'none',
   resolve: {
     mainFields: ['module', 'main'],
-    extensions: ['.js', '.ts'],
+    extensions: ['.js'],
     alias: {
       'sync-request$': path.resolve(__dirname, 'src/shims/sr.ts')
     }
@@ -19,20 +19,18 @@ module.exports = {
     rules: [{
       test: /\.ts$/,
       exclude: /node_modules/,
-      use: [{
-        loader: 'ts-loader',
+      use: {
+        loader: 'babel-loader',
         options: {
-          compilerOptions: {
-            "sourceMap": true,
-          }
+          presets: ['@babel/preset-env']
         }
-      }]
+      }
     }]
   },
   output: {
     path: path.join(__dirname, 'lib'),
     filename: 'index.js',
-    libraryTarget: "commonjs",
+    libraryTarget: 'commonjs'
   },
   plugins: [
   ],
@@ -40,4 +38,4 @@ module.exports = {
     __dirname: false,
     __filename: false
   }
-}
+};
