@@ -1,4 +1,4 @@
-import {ExtensionContext, commands, sources, workspace, listManager} from 'coc.nvim'
+import {ExtensionContext, commands, sources, workspace, listManager, events} from 'coc.nvim'
 import fs from 'fs'
 import BibTeXList from './list'
 import BibTexSource from './complete'
@@ -11,7 +11,7 @@ async function statAsync(filepath: string): Promise<fs.Stats | null> {
   let stat = null
   try {
     stat = await util.promisify(fs.stat)(filepath)
-  } catch (e) { } // tslint:disable-line
+  } catch (e) {} // tslint:disable-line
   return stat
 }
 function mkdirAsync(filepath: string): Promise<void> {
@@ -24,7 +24,7 @@ function mkdirAsync(filepath: string): Promise<void> {
 }
 
 export async function activate(context: ExtensionContext): Promise<void> {
-  const {subscriptions,storagePath} = context
+  const {subscriptions, storagePath} = context
   const config = workspace.getConfiguration('lists')
   const disabled = config.get('disabledLists', [])
   const {nvim} = workspace
@@ -32,12 +32,13 @@ export async function activate(context: ExtensionContext): Promise<void> {
   if (!stat || !stat.isDirectory()) {
     await mkdirAsync(storagePath)
   }
-  function isDisabled(name:string): boolean {
+  function isDisabled(name: string): boolean {
     return disabled.indexOf(name) !== -1
   }
 
   async function updateCache(): Promise<void> {
     const files = await cacheFullFilePaths()
+    workspace.showMessage(`Updating cache with ${files}`)
     files.forEach(file => {
       const cacheFile = CacheInterface.cacheFilePath(storagePath, file)
       if (fs.existsSync(cacheFile)) return
@@ -50,6 +51,9 @@ export async function activate(context: ExtensionContext): Promise<void> {
       })
     })
   }
+
+  // Update cache on directory change:
+  events.on('DirChanged', async () => await updateCache())
 
   if (!isDisabled('bibtex')) {
     await updateCache()
