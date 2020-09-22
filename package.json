@@ -27,9 +27,7 @@
     "coc": "^0.0.72"
   },
   "activationEvents": [
-    "onLanguage:pandoc",
-    "onLanguage:markdown",
-    "onLanguage:latex"
+    "*"
   ],
   "contributes": {
     "configuration": {
@@ -77,6 +75,13 @@
             "type": "string"
           }
         },
+        "coc.source.bibtex.triggerPatterns": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "string"
+          }
+        },
         "coc.source.bibtex.filetypes": {
           "type": [
             "array",
@@ -117,6 +122,7 @@
     "babel-loader": "^8.1.0",
     "bibtex-parse-js": "0.0.24",
     "coc.nvim": "0.0.79",
+    "core-js": "3",
     "eslint": "^7.9.0",
     "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12"
