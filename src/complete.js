@@ -1,4 +1,3 @@
-import { workspace } from 'coc.nvim';
 import getConfiguration from './utils/getConfiguration';
 import { previewWindow } from './utils/format';
 const has = (key, obj) => Object.prototype.hasOwnProperty.call(obj, key);

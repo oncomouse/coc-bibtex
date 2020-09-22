@@ -1,10 +1,10 @@
-import {BasicList, workspace} from 'coc.nvim';
-import {listItem} from './utils/format';
+import { BasicList, workspace } from 'coc.nvim';
+import { listItem } from './utils/format';
 import getConfiguration from './utils/getConfiguration';
 
 export default class FilesList extends BasicList {
-  constructor(fm) {
-    const {nvim} = workspace;
+  constructor (fm) {
+    const { nvim } = workspace;
     super(nvim);
     this.name = 'bibtex';
     this.defaultAction = 'insert';
@@ -12,14 +12,14 @@ export default class FilesList extends BasicList {
     this.detail = '';
     this.options = [];
     this.addAction('insert', async item => {
-      const {nvim} = workspace;
+      const { nvim } = workspace;
       await nvim.command(`normal! i${item.data.cite}`);
       await nvim.call('feedkeys', ['a', 'n']);
     });
     this.fm = fm;
   }
 
-  async loadItems() {
+  async loadItems () {
     if (this.fm.entries.length === 0) return null;
     const config = await getConfiguration();
     const items = [];
@@ -35,7 +35,7 @@ export default class FilesList extends BasicList {
         });
       } catch (err) {
         workspace.showMessage(`Error: ${err}
-    Entry: ${JSON.stringify(entry)}`, 'error')
+    Entry: ${JSON.stringify(entry)}`, 'error');
       }
     }
     return items;

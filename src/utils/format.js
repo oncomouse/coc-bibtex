@@ -1,4 +1,4 @@
-const has = (key, obj) => Object.prototype.hasOwnProperty.call(obj, key)
+const has = (key, obj) => Object.prototype.hasOwnProperty.call(obj, key);
 const getAuthor = entry => {
   if (has('author', entry.entryTags)) {
     return entry.entryTags.author;
@@ -7,8 +7,8 @@ const getAuthor = entry => {
     return `Ed. ${entry.entryTags.editor}`;
   }
   return 'Unknown Author';
-}
-const getTitle = entry => has('title', entry.entryTags) ? entry.entryTags.title : 'Unknown Title'
+};
+const getTitle = entry => has('title', entry.entryTags) ? entry.entryTags.title : 'Unknown Title';
 
 export const previewWindow = entry => `Title: ${getTitle(entry).replace(/[{}]+/g, '')}
 Author: ${getAuthor(entry).replace(/[{}]+/g, '')}
