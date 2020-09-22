@@ -1,9 +1,10 @@
-import { workspace } from 'coc.nvim';
+import {workspace} from 'coc.nvim';
 import getConfiguration from './utils/getConfiguration';
+import {previewWindow} from './utils/format';
 const has = (key, obj) => Object.prototype.hasOwnProperty.call(obj, key);
 const makeSource = async (fm) => {
   const config = await getConfiguration();
-  workspace.showMessage(JSON.stringify(fm.entries));
+  // workspace.showMessage(JSON.stringify(fm.entries));
   return {
     name: 'bibtex',
     triggerOnly: true,
@@ -16,12 +17,13 @@ const makeSource = async (fm) => {
         token.onCancellationRequested(() => {
           resolve(null);
         });
-        const items = Object.values(fm.entries).map(entry => ({
-          word: entry.BIBTEXKEY,
-          abbr: `[${entry.BIBTEXKEY}] ${(has('title', entry) ? entry.title : 'Unknown title').replace(/[{}]+/g, '')}`,
-          menu: config.shortcut
+        const items = fm.entries.map(entry => ({
+          word: entry.citationKey,
+          abbr: `[${entry.citationKey}] ${(has('title', entry.entryTags) ? entry.entryTags.title : 'Unknown title').replace(/[{}]+/g, '')}`,
+          menu: config.shortcut,
+          info: previewWindow(entry)
         }));
-        resolve({ items });
+        resolve({items});
       });
     }
   };

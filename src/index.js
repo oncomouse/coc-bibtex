@@ -1,19 +1,19 @@
-import { commands, sources, workspace, listManager, events } from 'coc.nvim';
+import {commands, sources, workspace, listManager, events} from 'coc.nvim';
 import fs from 'fs';
-import { promisify } from 'util';
+import {promisify} from 'util';
 import List from './list';
 import Complete from './complete';
 import FileManager from './utils/FileManager';
 
 const statPromise = promisify(fs.stat);
-async function statAsync (filepath) {
+async function statAsync(filepath) {
   let stat = null;
   try {
     stat = await statPromise(filepath);
   } catch (e) {} // tslint:disable-line
   return stat;
 }
-function mkdirAsync (filepath) {
+function mkdirAsync(filepath) {
   return new Promise((resolve, reject) => {
     fs.mkdir(filepath, err => {
       if (err) return reject(err);
@@ -21,8 +21,8 @@ function mkdirAsync (filepath) {
     });
   });
 }
-export async function activate (context) {
-  const { subscriptions, storagePath } = context;
+export async function activate(context) {
+  const {subscriptions, storagePath} = context;
   const config = workspace.getConfiguration('lists');
   const disabled = config.get('disabledLists', []);
   // const { nvim } = workspace;
@@ -44,7 +44,7 @@ export async function activate (context) {
   if (!isDisabled('bibtex')) {
     await fm.loadFiles();
     subscriptions.push(commands.registerCommand('bibtex.reloadLibrary', async () => await reloadFiles()));
-    // subscriptions.push(listManager.registerList(new List(fm)));
+    subscriptions.push(listManager.registerList(new List(fm)));
     subscriptions.push(sources.createSource(await Complete(fm)));
   }
 }

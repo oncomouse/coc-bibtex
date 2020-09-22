@@ -1,32 +1,29 @@
-import { workspace } from 'coc.nvim';
+import {workspace} from 'coc.nvim';
 import fs from 'fs';
-import BibtexParser from '../vendor/bibtex-js/BibtexParser';
+import path from 'path';
+import {sync as glob} from 'glob';
+// import BibtexParser from '../vendor/bibtex-js/BibtexParser';
+import bibTexParse from 'bibtex-parse-js';
 import getConfiguration from '../utils/getConfiguration.js';
 
 class FileManager {
-  constructor (storagePath) {
+  constructor(storagePath) {
     this.storagePath = storagePath;
     this.config = getConfiguration();
-    this.entries = {};
+    this.entries = [];
   }
 
-  async loadFiles () {
-    const config = await this.config;
-    const { nvim } = workspace;
-    this.entries = await config.files.reduce(async (bib, file) => {
-      const absoluteFile = await nvim.call('fnamemodify', [file, ':p']);
-      const globFiles = (await nvim.call('glob', absoluteFile)).split('\n');
-      return Object.assign({}, bib, globFiles.reduce((bib, file) => {
-        const parser = new BibtexParser();
-        parser.input = fs.readFileSync(file).toString();
-        try {
-          parser.bibtex();
-        } catch (err) {
-          workspace.showMessage(`There was a problem with an entry: ${err}`);
-        }
-        return Object.assign({}, bib, parser.entries);
-      }, {}));
-    }, {});
+  async loadFiles() {
+    const config = await getConfiguration();
+    // const {nvim} = workspace;
+    for (let file of config.files) {
+      // const absoluteFile = await nvim.call('fnamemodify', [file, ':p']);
+      const globFiles = glob(path.resolve(file));
+      for (let globFile of globFiles) {
+        this.entries = this.entries.concat(bibTexParse.toJSON(fs.readFileSync(globFile).toString()))
+      }
+    }
+    workspace.showMessage(`Entries: ${JSON.stringify(this.entries)}`)
   }
 }
 
