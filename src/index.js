@@ -23,9 +23,8 @@ function mkdirAsync (filepath) {
 }
 export async function activate (context) {
   const { subscriptions, storagePath } = context;
-  const config = workspace.getConfiguration('lists');
+  const config = await workspace.getConfiguration('lists');
   const disabled = config.get('disabledLists', []);
-  // const { nvim } = workspace;
   const stat = await statAsync(storagePath);
   if (!stat || !stat.isDirectory()) {
     await mkdirAsync(storagePath);
