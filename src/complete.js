@@ -1,10 +1,8 @@
-import {workspace} from 'coc.nvim';
 import getConfiguration from './utils/getConfiguration';
-import {previewWindow} from './utils/format';
+import { previewWindow } from './utils/format';
 const has = (key, obj) => Object.prototype.hasOwnProperty.call(obj, key);
 const makeSource = async (fm) => {
   const config = await getConfiguration();
-  // workspace.showMessage(JSON.stringify(fm.entries));
   return {
     name: 'bibtex',
     triggerOnly: true,
@@ -23,7 +21,7 @@ const makeSource = async (fm) => {
           menu: config.shortcut,
           info: previewWindow(entry)
         }));
-        resolve({items});
+        resolve({ items });
       });
     }
   };
