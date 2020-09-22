@@ -38,6 +38,24 @@ call coc#config('list.source.bibtex', {
 
 ### Using with LaTeX
 
+LaTeX is support for both completion and list management
+
+#### Completion
+
+To trigger completion with a citation command in LaTeX, instead of the pandoc-style `@`, add the following to `coc-settings.json`:
+
+~~~json
+{
+//...
+  "coc.source.bibtex.triggerPatterns": ["\\\\cite\\{"],
+  "coc.source.bibtex.triggerCharacters": []
+}
+~~~
+
+This will also work for the `\cite{}` command. Changing `coc.source.bibtex.triggerPatterns` to `cite\\{` will work for any of the commands that end in `cite`, not just `\cite`.
+
+#### List
+
 The default configuration for the list source is to insert pandoc-style citations (`[@cite-key]`). If you would like to use this extension with LaTeX, add the following configuration:
 
 In `coc-settings.json`:
@@ -46,27 +64,15 @@ In `coc-settings.json`:
 {
 //...
 
-"list": {
-  "source": {
-	"bibtex": {
-		"citation": {
-			"before": "\\cite{",
-			"after": "}"
-		}
-	}
+"list.source.bibtex": {
+    "citation": {
+      "before": "\\cite{",
+      "after": "}"
+    }
   }
 }
 //...
 }
-~~~
-
-Or in `vimrc`:
-
-~~~vim
-call coc#config('list.source.bibtex.citation', {
-    \ 'before': '\cite{',
-	\ 'after': '}'
-    \ })
 ~~~
 
 ## Useful Commands
