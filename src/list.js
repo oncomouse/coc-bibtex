@@ -35,7 +35,7 @@ export default class FilesList extends BasicList {
         });
       } catch (err) {
         workspace.showMessage(`Error: ${err}
-    Entry: ${JSON.stringify(entry)}`, 'error');
+Entry: ${JSON.stringify(entry)}`, 'error');
       }
     }
     return items;
