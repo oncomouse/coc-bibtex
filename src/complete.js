@@ -1,6 +1,5 @@
 import getConfiguration from './utils/getConfiguration';
-import { previewWindow } from './utils/format';
-const has = (key, obj) => Object.prototype.hasOwnProperty.call(obj, key);
+import { previewWindow, completeAbbr } from './utils/format';
 const makeSource = async (fm) => {
   const config = await getConfiguration();
   return {
@@ -17,7 +16,7 @@ const makeSource = async (fm) => {
         });
         const items = fm.entries.map(entry => ({
           word: entry.citationKey,
-          abbr: `[${entry.citationKey}] ${(has('title', entry.entryTags) ? entry.entryTags.title : 'Unknown title').replace(/[{}]+/g, '')}`,
+          abbr: `[${entry.citationKey}] ${completeAbbr(entry).replace(/[{}]+/g, '')}`,
           menu: config.shortcut,
           info: previewWindow(entry)
         }));

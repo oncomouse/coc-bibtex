@@ -10,6 +10,8 @@ const getAuthor = entry => {
 };
 const getTitle = entry => has('title', entry.entryTags) ? entry.entryTags.title : 'Unknown Title';
 
+export const completeAbbr = entry => has('title', entry.entryTags) ? entry.entryTags.title : 'Unknown title';
+
 export const previewWindow = entry => `Title: ${getTitle(entry).replace(/[{}]+/g, '')}
 Author: ${getAuthor(entry).replace(/[{}]+/g, '')}
 Year: ${entry.entryTags.date}`;
