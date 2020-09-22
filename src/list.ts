@@ -1,11 +1,11 @@
-import { BasicList, ListTask, Neovim, workspace } from 'coc.nvim'
-import { EventEmitter } from 'events'
+import {BasicList, ListTask, Neovim, workspace} from 'coc.nvim'
+import {EventEmitter} from 'events'
 import BibTeXReader from './BibTexReader'
 import cacheFullFilePaths from './cacheFullFilePaths'
 
 class Task extends EventEmitter implements ListTask {
-  private readonly storagePath:string
-  constructor(storagePath:string) {
+  private readonly storagePath: string
+  constructor(storagePath: string) {
     super()
     this.storagePath = storagePath
   }
@@ -32,14 +32,14 @@ export default class FilesList extends BasicList {
   public description = 'Search for bibtex entries.'
   public readonly detail = ``
   public options = []
-  private storagePath:string
+  private storagePath: string
   private files: string[]
 
   constructor(nvim: Neovim, storagePath: string) {
     super(nvim)
     this.addAction('insert', async item => {
       const {nvim} = workspace
-      await nvim.command(`normal! i ${item.data.cite}`)
+      await nvim.command(`normal! i${item.data.cite}`)
       await nvim.call('feedkeys', ['a', 'n'])
     })
     this.storagePath = storagePath
