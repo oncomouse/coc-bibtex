@@ -50,8 +50,8 @@ In `coc-settings.json`:
   "source": {
 	"bibtex": {
 		"citation": {
-			"before": "\cite{",
-			"after": "\}"
+			"before": "\\cite{",
+			"after": "}"
 		}
 	}
   }
