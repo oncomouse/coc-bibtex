@@ -8,32 +8,16 @@ Run `:CocInstall coc-bibtex` to install.
 
 ## Configuration
 
-Set `list.source.bibtex.files` to an array containing your `.bib` files. For instance, in `coc-settings.json`:
+Set `bibtex.files` to an array containing your `.bib` files. For instance, in `coc-settings.json`:
 
 ~~~json
 {
 // …
-  "list": {
-    "source": {
-      "bibtex": {
-        "files": [
-          "~/my-library.bib"
-        ]
-      }
-    }
-  }
+  "bibtex.files": [
+    "~/my-library.bib"
+  ]
 // …
 }
-~~~
-
-Or in vimrc:
-
-~~~vim
-call coc#config('list.source.bibtex', {
-  \  'files': [
-  \    '~/my-library.bib'
-  \  ]
-  \})
 ~~~
 
 ### Using with LaTeX
@@ -63,13 +47,9 @@ In `coc-settings.json`:
 ~~~json
 {
 //...
-
-"list.source.bibtex": {
-    "citation": {
-      "before": "\\cite{",
-      "after": "}"
-    }
-  }
+"list.source.bibtex.citation": {
+  "before": "\\cite{",
+  "after": "}"
 }
 //...
 }

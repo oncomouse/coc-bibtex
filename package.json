@@ -33,6 +33,14 @@
     "configuration": {
       "type": "object",
       "properties": {
+        "bibtex.files": {
+          "type": "array",
+          "default": [],
+          "description": "List of .bib files to read.",
+          "items": {
+            "type": "string"
+          }
+        },
         "list.source.bibtex.files": {
           "type": "array",
           "default": [],
