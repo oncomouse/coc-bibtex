@@ -77,6 +77,15 @@
             "type": "string"
           }
         },
+        "coc.source.bibtex.triggerPatterns": {
+          "type": "array",
+          "default": [
+            "@"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
         "coc.source.bibtex.filetypes": {
           "type": [
             "array",

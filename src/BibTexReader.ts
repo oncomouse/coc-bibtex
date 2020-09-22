@@ -6,16 +6,16 @@ import BibTexEntry from './BibTexEntry'
 import makeCitation from './makeCitation'
 
 class BibTeXReader extends Readable {
-  constructor(storagePath:string, file: string) {
+  constructor(storagePath: string, file: string) {
     super({})
     const cacheFile = CacheInterface.cacheFilePath(storagePath, file)
-    if(fs.existsSync(cacheFile)) {
+    if (fs.existsSync(cacheFile)) {
       const cacheData = JSON.parse(fs.readFileSync(cacheFile).toString())
       cacheData.map(data => this.push(JSON.stringify(data)))
     } else {
-      const bibData = Cite.parse.bibtex.text(fs.readFileSync(file).toString())
+      const bibData = fs.lstatSync(file).isFile() ? Cite.parse.bibtex.text(fs.readFileSync(file).toString()) : []
       const output = []
-      bibData.forEach((entry:BibTexEntry) => {
+      bibData.forEach((entry: BibTexEntry) => {
         const cite = (new Cite(entry, {})).format('bibliography', {append: entry => ` [${entry.id}]`})
         const data = {
           label: cite,
