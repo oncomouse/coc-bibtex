@@ -11,10 +11,12 @@ const cacheFullFilePaths = async (): Promise<string[]> => {
   for (const file of files) {
     if (globRegexp.test(file)) {
       const globs = await nvim.call('glob', [file])
-      for (const globFile of globs.split(/\n/)) {
-        const fullPath = await nvim.call('fnamemodify', [globFile, ':p'])
-        output.push(fullPath)
-      }
+      if (globs !== '') {
+        for (const globFile of globs.split(/\n/)) {
+          const fullPath = await nvim.call('fnamemodify', [globFile, ':p'])
+          output.push(fullPath)
+        }
+      } 
     } else {
       const fullPath = await nvim.call('fnamemodify', [file, ':p'])
       output.push(fullPath)

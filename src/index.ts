@@ -38,10 +38,11 @@ export async function activate(context: ExtensionContext): Promise<void> {
 
   async function updateCache(): Promise<void> {
     const files = await cacheFullFilePaths()
+    if (files.length === 0) { return }
     workspace.showMessage(`Updating cache with ${files}`)
     files.forEach(file => {
       const cacheFile = CacheInterface.cacheFilePath(storagePath, file)
-      if (fs.existsSync(cacheFile)) return
+      if (fs.existsSync(cacheFile)) { return }
       workspace.showMessage(`Caching BibTeX file ${file}, one moment…`)
       const task = new BibTeXReader(storagePath, file)
       task.on('data', () => {})

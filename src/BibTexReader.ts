@@ -10,7 +10,7 @@ class BibTeXReader extends Readable {
     super({})
     const cacheFile = CacheInterface.cacheFilePath(storagePath, file)
     if (fs.existsSync(cacheFile)) {
-      const cacheData = JSON.parse(fs.readFileSync(cacheFile).toString())
+      const cacheData = fs.lstatSync(cacheFile).isFile() ? JSON.parse(fs.readFileSync(cacheFile).toString()) : []
       cacheData.map(data => this.push(JSON.stringify(data)))
     } else {
       const bibData = fs.lstatSync(file).isFile() ? Cite.parse.bibtex.text(fs.readFileSync(file).toString()) : []
