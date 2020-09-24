@@ -4,6 +4,7 @@ import { promisify } from 'util';
 import List from './list';
 import Complete from './complete';
 import FileManager from './utils/FileManager';
+import getConfiguration from './utils/getConfiguration';
 
 const statPromise = promisify(fs.stat);
 async function statAsync (filepath) {
@@ -23,8 +24,9 @@ function mkdirAsync (filepath) {
 }
 export async function activate (context) {
   const { subscriptions, storagePath } = context;
-  const config = await workspace.getConfiguration('lists');
-  const disabled = config.get('disabledLists', []);
+  const listConfig = await workspace.getConfiguration('lists');
+  const disabled = listConfig.get('disabledLists', []);
+  const config = await getConfiguration();
   const stat = await statAsync(storagePath);
   if (!stat || !stat.isDirectory()) {
     await mkdirAsync(storagePath);
@@ -43,7 +45,11 @@ export async function activate (context) {
   if (!isDisabled('bibtex')) {
     await fm.loadFiles();
     subscriptions.push(commands.registerCommand('bibtex.reloadLibrary', async () => await reloadFiles()));
-    subscriptions.push(listManager.registerList(new List(fm)));
-    subscriptions.push(sources.createSource(await Complete(fm)));
+    if (config.listEnable) {
+      subscriptions.push(listManager.registerList(new List(fm)));
+    }
+    if (config.completeEnable) {
+      subscriptions.push(sources.createSource(await Complete(fm)));
+    }
   }
 }

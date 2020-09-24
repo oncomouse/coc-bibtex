@@ -49,6 +49,10 @@
             "type": "string"
           }
         },
+        "list.source.bibtex.enable": {
+          "type": "boolean",
+          "default": true
+        },
         "list.source.bibtex.citation": {
           "type": "object",
           "default": {
@@ -67,6 +71,10 @@
           }
         },
         "bibtex.enable": {
+          "type": "boolean",
+          "default": true
+        },
+        "coc.source.bibtex.enable": {
           "type": "boolean",
           "default": true
         },
