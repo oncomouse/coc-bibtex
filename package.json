@@ -29,7 +29,9 @@
   "activationEvents": [
     "onLanguage:pandoc",
     "onLanguage:markdown",
-    "onLanguage:latex"
+    "onLanguage:latex",
+    "onLanguage:tex",
+    "onLanguage:plaintex"
   ],
   "contributes": {
     "configuration": {
@@ -90,6 +92,8 @@
             "null"
           ],
           "default": [
+            "tex",
+            "plaintex",
             "latex",
             "pandoc",
             "markdown"
