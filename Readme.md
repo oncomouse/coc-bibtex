@@ -8,6 +8,14 @@ Run `:CocInstall coc-bibtex` to install.
 
 ## Configuration
 
+Changing your `coc-settings.json` file will change the behavior of `coc-bibtex` concerning:
+
+* Setting BibTeX File Location
+* Changing Supported Filetypes
+* Using with LaTeX
+
+### Setting BibTeX File Location
+
 Set `list.source.bibtex.files` to an array containing your `.bib` files. For instance, in `coc-settings.json`:
 
 ~~~json
@@ -35,6 +43,33 @@ call coc#config('list.source.bibtex', {
   \  ]
   \})
 ~~~
+
+### Changing Supported Filetypes
+
+By default, the following filetypes are supported for completion:
+
+* tex
+* plaintex
+* latex
+* pandoc
+* markdown
+
+To change this behavior, determine the `filetype` (in Vim) you wish to add. This can be done by running `:set filetype?` with the kind of file you wish to support. Then, edit `coc.source.bibtex.filetypes` to include the `filetype` you wish to support (you will also have to include the default types, too).
+
+If, for instance, you wanted to add support for `.textile` files, you would need to include the following in your `coc-settings.json` file:
+
+~~~json
+coc.source.bibtex.filetypes: [
+	"tex",
+	"plaintex",
+	"latex",
+	"pandoc",
+	"markdown",
+	"textile"
+]
+~~~
+
+And textile support will be added.
 
 ### Using with LaTeX
 
