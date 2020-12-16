@@ -40,14 +40,19 @@ export async function activate(context: ExtensionContext): Promise<void> {
     const files = await cacheFullFilePaths()
     if (files.length === 0) { return }
     workspace.showMessage(`Updating cache with ${files}`)
+    const silenceOutput = config.get<boolean>('silent', false)
     files.forEach(file => {
       const cacheFile = CacheInterface.cacheFilePath(storagePath, file)
       if (fs.existsSync(cacheFile)) { return }
-      workspace.showMessage(`Caching BibTeX file ${file}, one moment…`)
+      if (!silenceOutput)  {
+        workspace.showMessage(`Caching BibTeX file ${file}, one moment…`)
+      }
       const task = new BibTeXReader(storagePath, file)
       task.on('data', () => {})
       task.on('end', () => {
-        workspace.showMessage('Done')
+        if (!silenceOutput) {
+          workspace.showMessage('Done')
+        }
         setTimeout(() => nvim.command('echom ""'), 500)
       })
     })

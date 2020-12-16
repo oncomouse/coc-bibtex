@@ -13,6 +13,7 @@ Changing your `coc-settings.json` file will change the behavior of `coc-bibtex` 
 * Setting BibTeX File Location
 * Changing Supported Filetypes
 * Using with LaTeX
+* Silencing Cache Messages
 
 ### Setting BibTeX File Location
 
@@ -109,6 +110,10 @@ In `coc-settings.json`:
 //...
 }
 ~~~
+
+### Silencing Caching Messages
+
+To turn off the message that `coc-bibtex` is caching your `.bib` files, set `bibtex.silent` to `true` in your `coc-settings.json` file.
 
 ## Useful Commands
 
