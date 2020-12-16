@@ -64,7 +64,7 @@
         },
         "bibtex.silent": {
           "type": "boolean",
-          "default": true
+          "default": false
         },
         "coc.source.bibtex.shortcut": {
           "type": "string",
