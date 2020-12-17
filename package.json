@@ -108,9 +108,9 @@
   "devDependencies": {
     "@chemzqm/tsconfig": "^0.0.3",
     "@chemzqm/tslint-config": "^1.0.18",
-    "@citation-js/core": "^0.4.8",
-    "@citation-js/plugin-bibtex": "^0.4.8",
-    "@citation-js/plugin-csl": "^0.4.8",
+    "@citation-js/core": "^0.5.0-alpha.9",
+    "@citation-js/plugin-bibtex": "^0.5.0-alpha.9",
+    "@citation-js/plugin-csl": "^0.5.0-alpha.9",
     "@types/node": "^12.7.2",
     "coc.nvim": "^0.0.73",
     "crypto": "^1.0.1",
