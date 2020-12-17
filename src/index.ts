@@ -25,8 +25,8 @@ function mkdirAsync(filepath: string): Promise<void> {
 
 export async function activate(context: ExtensionContext): Promise<void> {
   const {subscriptions, storagePath} = context
-  const config = workspace.getConfiguration('lists')
-  const disabled = config.get('disabledLists', [])
+  const config = workspace.getConfiguration()
+  const disabled = config.get('lists.disabledLists', [])
   const {nvim} = workspace
   let stat = await statAsync(storagePath)
   if (!stat || !stat.isDirectory()) {
@@ -37,14 +37,26 @@ export async function activate(context: ExtensionContext): Promise<void> {
   }
 
   async function updateCache(): Promise<void> {
+    const filetype = await nvim.eval('&filetype')
+    const filetypes = config.get('coc.source.bibtex.filetypes', [
+      'tex',
+      'plaintex',
+      'latex',
+      'pandoc',
+      'markdown'
+    ])
+    if (filetypes.indexOf(<string>filetype) < 0) {return }
     const files = await cacheFullFilePaths()
-    if (files.length === 0) { return }
-    workspace.showMessage(`Updating cache with ${files}`)
-    const silenceOutput = config.get<boolean>('silent', false)
+    if (files.length === 0) {return }
+    const silenceOutput = config.get<boolean>('bibtex.silent', false)
+    if (!silenceOutput) {
+      workspace.showMessage(`Updating cache with ${files}`)
+      setTimeout(() => nvim.command('echom ""'), 500)
+    }
     files.forEach(file => {
       const cacheFile = CacheInterface.cacheFilePath(storagePath, file)
-      if (fs.existsSync(cacheFile)) { return }
-      if (!silenceOutput)  {
+      if (fs.existsSync(cacheFile)) {return }
+      if (!silenceOutput) {
         workspace.showMessage(`Caching BibTeX file ${file}, one moment…`)
       }
       const task = new BibTeXReader(storagePath, file)

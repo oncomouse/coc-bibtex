@@ -47,7 +47,20 @@ export default class FilesList extends BasicList {
   }
 
   private async cacheFilePaths(): Promise<void> {
-    this.files = await cacheFullFilePaths()
+    const filetype = await workspace.nvim.eval('&filetype')
+    const config = workspace.getConfiguration()
+    const filetypes = config.get('coc.source.bibtex.filetypes', [
+      'tex',
+      'plaintex',
+      'latex',
+      'pandoc',
+      'markdown'
+    ])
+    if (filetypes.indexOf(<string>filetype) < 0) {
+      this.files = []
+    } else {
+      this.files = await cacheFullFilePaths()
+    }
   }
 
   public async loadItems(): Promise<ListTask> {
