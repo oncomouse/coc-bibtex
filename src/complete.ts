@@ -7,6 +7,7 @@ import BibTexEntry from './BibTexEntry'
 const has = (key:any, obj:object):boolean => Object.prototype.hasOwnProperty.call(obj, key)
 
 const config = workspace.getConfiguration('bibtex')
+const truncate = config.get<number>('truncate')
 const makeSource = (storagePath:string) => ({
   name: 'bibtex',
   triggerOnly: true,
@@ -26,9 +27,11 @@ const makeSource = (storagePath:string) => ({
         const task = new BibTeXReader(storagePath, file)
         task.on('data', (json:string) => {
           const entry:BibTexEntry = JSON.parse(json)
+          const { label, properties } = entry.data.entry
+          const display_label = truncate !== undefined ? label.slice(0, truncate) : label
           items.push({
-            word: entry.data.entry.label,
-            abbr: `[${entry.data.entry.label}] ${(has('title', entry.data.entry.properties) ? entry.data.entry.properties.title : 'Unknown title').replace(/[{}]+/g,'')}`,
+            word: label,
+            abbr: `[${display_label}] ${(has('title', properties) ? properties.title : 'Unknown title').replace(/[{}]+/g,'')}`,
             menu: this.menu || '[bibtex]',
           })
         })
