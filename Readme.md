@@ -17,7 +17,7 @@ Changing your `coc-settings.json` file will change the behavior of `coc-bibtex` 
 
 ### Setting BibTeX File Location
 
-Set `list.source.bibtex.files` to an array containing your `.bib` files. For instance, in `coc-settings.json`:
+Set `coc.preferences.bibtex.files` to an array containing your `.bib` files. For instance, in `coc-settings.json`:
 
 ~~~json
 {
@@ -38,7 +38,7 @@ Set `list.source.bibtex.files` to an array containing your `.bib` files. For ins
 Or in vimrc:
 
 ~~~vim
-call coc#config('list.source.bibtex', {
+call coc#config('coc.preferences.bibtex', {
   \  'files': [
   \    '~/my-library.bib'
   \  ]
@@ -55,12 +55,12 @@ By default, the following filetypes are supported for completion:
 * pandoc
 * markdown
 
-To change this behavior, determine the `filetype` (in Vim) you wish to add. This can be done by running `:set filetype?` with the kind of file you wish to support. Then, edit `coc.source.bibtex.filetypes` to include the `filetype` you wish to support (you will also have to include the default types, too).
+To change this behavior, determine the `filetype` (in Vim) you wish to add. This can be done by running `:set filetype?` with the kind of file you wish to support. Then, edit `coc.preferences.bibtex.filetypes` to include the `filetype` you wish to support (you will also have to include the default types, too).
 
 If, for instance, you wanted to add support for `.textile` files, you would need to include the following in your `coc-settings.json` file:
 
 ~~~json
-coc.source.bibtex.filetypes: [
+coc.preferences.bibtex.filetypes: [
 	"tex",
 	"plaintex",
 	"latex",
@@ -83,12 +83,12 @@ To trigger completion with a citation command in LaTeX, instead of the pandoc-st
 ~~~json
 {
 //...
-  "coc.source.bibtex.triggerPatterns": ["\\\\cite\\{"],
-  "coc.source.bibtex.triggerCharacters": []
+  "coc.preferences.bibtex.triggerPatterns": ["\\\\cite\\{"],
+  "coc.preferences.bibtex.triggerCharacters": []
 }
 ~~~
 
-This will also work for the `\cite{}` command. Changing `coc.source.bibtex.triggerPatterns` to `cite\\{` will work for any of the commands that end in `cite`, not just `\cite`.
+This will also work for the `\cite{}` command. Changing `coc.preferences.bibtex.triggerPatterns` to `cite\\{` will work for any of the commands that end in `cite`, not just `\cite`.
 
 #### List
 
@@ -100,7 +100,7 @@ In `coc-settings.json`:
 {
 //...
 
-"list.source.bibtex": {
+"coc.preferences.bibtex": {
     "citation": {
       "before": "\\cite{",
       "after": "}"

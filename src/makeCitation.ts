@@ -6,7 +6,7 @@ interface CitationConfiguration {
 }
 
 const makeCitation = (id:string):string => {
-  const config = workspace.getConfiguration('list.source.bibtex')
+  const config = workspace.getConfiguration('coc.preferences.bibtex')
   const {before,after} = config.get<CitationConfiguration>('citation', {before: '[@', after: ']'})
   return `${before}${id}${after}`
 }

@@ -49,7 +49,7 @@ export default class FilesList extends BasicList {
   private async cacheFilePaths(): Promise<void> {
     const filetype = await workspace.nvim.eval('&filetype')
     const config = workspace.getConfiguration()
-    const filetypes = config.get('coc.source.bibtex.filetypes', [
+    const filetypes = config.get('coc.preferences.bibtex.filetypes', [
       'tex',
       'plaintex',
       'latex',

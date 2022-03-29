@@ -38,7 +38,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
 
   async function updateCache(): Promise<void> {
     const filetype = await nvim.eval('&filetype')
-    const filetypes = config.get('coc.source.bibtex.filetypes', [
+    const filetypes = config.get('coc.preferences.bibtex.filetypes', [
       'tex',
       'plaintex',
       'latex',
