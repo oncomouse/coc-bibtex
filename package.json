@@ -33,7 +33,7 @@
     "configuration": {
       "type": "object",
       "properties": {
-        "list.source.bibtex.files": {
+        "coc.preferences.bibtex.files": {
           "type": "array",
           "default": [],
           "description": "List of .bib files to read.",
@@ -41,7 +41,7 @@
             "type": "string"
           }
         },
-        "list.source.bibtex.citation": {
+        "coc.preferences.bibtex.citation": {
           "type": "object",
           "default": {
             "before": "[@",
@@ -66,11 +66,11 @@
           "type": "boolean",
           "default": false
         },
-        "coc.source.bibtex.shortcut": {
+        "coc.preferences.bibtex.shortcut": {
           "type": "string",
           "default": "BIB"
         },
-        "coc.source.bibtex.triggerCharacters": {
+        "coc.preferences.bibtex.triggerCharacters": {
           "type": "array",
           "default": [
             "@"
@@ -79,14 +79,14 @@
             "type": "string"
           }
         },
-        "coc.source.bibtex.triggerPatterns": {
+        "coc.preferences.bibtex.triggerPatterns": {
           "type": "array",
           "default": [],
           "items": {
             "type": "string"
           }
         },
-        "coc.source.bibtex.filetypes": {
+        "coc.preferences.bibtex.filetypes": {
           "type": [
             "array",
             "null"
