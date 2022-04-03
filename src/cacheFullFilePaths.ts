@@ -5,7 +5,7 @@ const cacheFullFilePaths = async (): Promise<string[]> => {
   const files = config.get<string[]>('files', [])
   const output = []
   if (files.length === 0) {
-    workspace.showMessage('No .bib files provided; set bibtex to a list of .bib files')
+    workspace.showMessage('No .bib files provided; set bibtex.files to a list of .bib files')
   }
   const globRegexp = new RegExp('\\*', 'g');
   for (const file of files) {
