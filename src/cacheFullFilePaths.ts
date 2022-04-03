@@ -1,11 +1,11 @@
 import {workspace} from 'coc.nvim'
 const cacheFullFilePaths = async (): Promise<string[]> => {
   const {nvim} = workspace
-  const config = workspace.getConfiguration('coc.preferences.bibtex')
+  const config = workspace.getConfiguration('bibtex')
   const files = config.get<string[]>('files', [])
   const output = []
   if (files.length === 0) {
-    workspace.showMessage('No .bib files provided; set coc.preferences.bibtex to a list of .bib files')
+    workspace.showMessage('No .bib files provided; set bibtex.files to a list of .bib files')
   }
   const globRegexp = new RegExp('\\*', 'g');
   for (const file of files) {
